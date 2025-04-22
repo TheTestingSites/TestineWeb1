@@ -1,5 +1,3 @@
-// File: redirect.js
-
 // Function to check if the user is on a mobile device
 function isMobile() {
     return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -16,19 +14,23 @@ function checkDevice() {
     }
 }
 
-// Disable right-click (context menu)
-document.addEventListener('contextmenu', function (e) {
-    e.preventDefault();
-    alert("Right-click disabled!");
-});
+// Disable right-click (context menu) only on test.html
+if (window.location.pathname.includes('test.html')) {
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        alert("Right-click disabled on the desktop version!");
+    });
+}
 
-// Disable F12 (DevTools) and other common DevTools keys
-document.onkeydown = function (e) {
-    if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
-        alert("Developer tools are disabled!");
-        return false;
-    }
-};
+// Disable F12 (DevTools) and other common DevTools keys only on test.html
+if (window.location.pathname.includes('test.html')) {
+    document.onkeydown = function (e) {
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
+            alert("Developer tools are disabled!");
+            return false;
+        }
+    };
+}
 
 // Run the device check on load and resize
 window.onload = checkDevice;
